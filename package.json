@@ -1,0 +1,15 @@
+{
+  "author": "",
+  "name": "serverstats",
+  "version": "0.0.0",
+   "engines": {
+    "node": ">0.4.0"
+  },
+  "dependencies": {
+    "express": "~4.0.0",
+    "ws": "",
+    "serialport": ""
+  },
+  "devDependencies": {},
+  "optionalDependencies": {}
+}

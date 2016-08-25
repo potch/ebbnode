@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        font-family: Tahoma, Geneva, sans-serif;
+      }
+      div {
+        display: inline;
+      }
+    </style>
+    <script>
+      var host = window.document.location.host.replace(/:.*/, '');
+      var ws = new WebSocket('ws://' + host + ':8080');
+      var previousX = 0;
+      var previousY = 0;
+      document.onmousemove = function(e) {
+        var scale = 10;
+        var speed_factor = 0.3;
+        var scaledX = -1 * e.clientY * scale;
+        var scaledY = e.clientX * scale;
+        var deltaX = scaledX - previousX;
+        var deltaY = scaledY - previousY;
+        var manhattan_distance = Math.abs(deltaX) + Math.abs(deltaY);
+        if (manhattan_distance != 0) {
+          ws.send('XM,'+Math.round(manhattan_distance*speed_factor)+','+deltaX+','+deltaY+'\n');
+        }
+        previousX = scaledX;
+        previousY = scaledY;
+      };
+      document.onmousedown = function(e) {
+        ws.send('SP,1\n');
+      };
+      document.onmouseup = function(e) {
+        ws.send('SP,0\n');
+      };
+    </script>
+  </head>
+  <body>
+  </body>
+</html>
